@@ -5,4 +5,11 @@ node_modules/
 *.log
 *.tmp
 .DS_Store
+dist/
+
+.terraform.lock.hcl
+test-tf/
+
+# Scripts
+scripts_local
 
