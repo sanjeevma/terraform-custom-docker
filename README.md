@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/sanjeevma/terraform-custom-docker/workflows/CI/badge.svg)](https://github.com/sanjeevma/terraform-custom-docker/actions)
 [![Release](https://github.com/sanjeevma/terraform-custom-docker/workflows/Release/badge.svg)](https://github.com/sanjeevma/terraform-custom-docker/actions)
-[![Docker Image](https://ghcr-badge.deta.dev/sanjeevma/terraform-custom-docker/latest_tag?trim=major&label=latest)](https://github.com/sanjeevma/terraform-custom-docker/pkgs/container/terraform-custom-docker)
+
 
 Production-ready Terraform container with pre-baked AWS provider for faster initialization.
 ## Features
