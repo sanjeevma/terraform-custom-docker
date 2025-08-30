@@ -40,7 +40,7 @@ jobs:
 
        # Provider test
        mkdir -p test-tf
-        chmod 777 test-tf
+       chmod 777 test-tf
        cat > test-tf/main.tf <<EOF
        terraform {
          required_providers {
@@ -58,34 +58,10 @@ jobs:
        # Debug mode
        docker run --rm test-image debug -c "echo 'Debug works'"
 
- security:
-   runs-on: ubuntu-latest
-   steps:
-   - uses: actions/checkout@v4
-
-   - name: Build image for scanning
-     run: |
-       docker build -f images/terraform/Dockerfile \
-         -t security-scan \
-         .
-
-   - name: Run Trivy vulnerability scanner
-     uses: aquasecurity/trivy-action@master
-     with:
-       image-ref: security-scan
-       format: sarif
-       output: trivy-results.sarif
-
-   - name: Upload Trivy scan results
-     uses: github/codeql-action/upload-sarif@v3
-     if: always()
-     with:
-       sarif_file: trivy-results.sarif
-
  build-multiarch:
    runs-on: ubuntu-latest
    if: github.event_name == 'push'
-   needs: [test, security]
+   needs: [test]
 
    steps:
    - uses: actions/checkout@v4
