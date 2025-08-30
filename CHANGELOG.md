@@ -32,5 +32,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minimal Alpine base image
 - No sensitive data baked into image
 
-[Unreleased]: https://github.com/yourusername/terraform-docker/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/terraform-docker/releases/tag/v1.0.0
+[Unreleased]: https://github.com/sanjeevma/terraform-docker/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/sanjeevma/terraform-docker/releases/tag/v1.0.0
