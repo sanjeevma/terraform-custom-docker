@@ -13,50 +13,50 @@ env:
 
 jobs:
  test:
-   runs-on: buildjet-2vcpu-ubuntu-2204
-   strategy:
-     matrix:
-       tf_version: ["1.13.0", "1.13.1"]
-       aws_provider_version: ["5.64.0", "5.65.0"]
+  runs-on: ubuntu-latest
+  strategy:
+    matrix:
+      tf_version: ["1.13.0", "1.13.1"]
+      aws_provider_version: ["5.64.0", "5.65.0"]
 
-   steps:
-   - uses: actions/checkout@v4
+  steps:
+  - uses: actions/checkout@v4
 
-   - name: Set up Docker Buildx
-     uses: docker/setup-buildx-action@v3
+  - name: Set up Docker Buildx
+    uses: docker/setup-buildx-action@v3
 
-   - name: Build image
-     run: |
-       docker build -f images/terraform/Dockerfile \
-         --build-arg TF_VERSION=${{ matrix.tf_version }} \
-         --build-arg AWS_PROVIDER_VERSION=${{ matrix.aws_provider_version }} \
-         -t test-image \
-         .
+  - name: Build image
+    run: |
+      docker build -f images/terraform/Dockerfile \
+        --build-arg TF_VERSION=${{ matrix.tf_version }} \
+        --build-arg AWS_PROVIDER_VERSION=${{ matrix.aws_provider_version }} \
+        -t test-image \
+        .
 
-   - name: Run tests
-     run: |
-       # Version check
-       docker run --rm test-image version
+  - name: Run tests
+    run: |
+      # Version check
+      docker run --rm test-image version
 
-       # Provider test
-       mkdir -p test-tf
-       chmod 777 test-tf
-       cat > test-tf/main.tf <<EOF
-       terraform {
-         required_providers {
-           aws = {
-             source  = "hashicorp/aws"
-             version = "${{ matrix.aws_provider_version }}"
-           }
-         }
-       }
-       EOF
+      # Provider test
+      mkdir -p test-tf
+      chmod 777 test-tf
+      cat > test-tf/main.tf <<EOF
+      terraform {
+        required_providers {
+          aws = {
+            source  = "hashicorp/aws"
+            version = "${{ matrix.aws_provider_version }}"
+          }
+        }
+      }
+      EOF
 
-       docker run --rm -v $(pwd)/test-tf:/workspace -w /workspace test-image init
-       docker run --rm -v $(pwd)/test-tf:/workspace -w /workspace test-image providers
+      docker run --rm -v $(pwd)/test-tf:/workspace -w /workspace test-image init
+      docker run --rm -v $(pwd)/test-tf:/workspace -w /workspace test-image providers
 
-       # Debug mode
-       docker run --rm test-image debug -c "echo 'Debug works'"
+      # Debug mode
+      docker run --rm test-image debug -c "echo 'Debug works'"
 
  build-multiarch:
    runs-on: ubuntu-latest
