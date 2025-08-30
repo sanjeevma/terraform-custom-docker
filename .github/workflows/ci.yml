@@ -40,6 +40,7 @@ jobs:
 
        # Provider test
        mkdir -p test-tf
+        chmod 777 test-tf
        cat > test-tf/main.tf <<EOF
        terraform {
          required_providers {
